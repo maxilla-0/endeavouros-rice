@@ -1,0 +1,2 @@
+#!/bin/sh
+rm /home/mandible/.cache/dmenu_run && PATH=~/.local/bin:$PATH dmenu_path | dmenu "$@" | ${SHELL:-"/bin/sh"} &
