@@ -1,0 +1,67 @@
+# Zathura configuration file
+# See man `man zathurarc'
+
+set selection-clipboard clipboard
+
+# Open document in fit-width mode by default
+set adjust-open "best-fit"
+
+# One page per row by default
+set pages-per-row 1
+
+#stop at page boundries
+set scroll-page-aware "true"
+set smooth-scroll "true"
+set scroll-full-overlap 0.01
+#set scroll-step 100
+
+#zoom settings
+set zoom-min 10
+set guioptions "s"
+
+# zathurarc-nord
+
+set font "Jetbrainsmono Nerd Font Mono 10"
+set default-bg "#282828" #00
+set default-fg "#83a598" #01
+
+set statusbar-fg "#1d2021" #04
+set statusbar-bg "#83a598" #01
+
+set inputbar-bg "#282828" #00 currently not used
+set inputbar-fg "#ebdbb2" #02
+
+set notification-error-bg "#fb4934" #08
+set notification-error-fg "#1d2021" #00
+
+set notification-warning-bg "#fe8019" #08
+set notification-warning-fg "#1d2021" #00
+
+set highlight-color "rgba(184, 187, 38, 0.5)" #0A
+set highlight-active-color "rgba(184, 187, 38, 0.5)" #0D
+
+set completion-highlight-fg "#1d2021" #02
+set completion-highlight-bg "#b8bb26" #0C
+
+set completion-bg "#282828" #02
+set completion-fg "#83a598" #0C
+
+set notification-bg "#458588" #0B
+set notification-fg "#fbf1c7" #00
+
+set index-active-bg "#83a598"
+set index-active-fg "#1d2021"
+set index-bg "#282828"
+set index-fg "#fbf1c7"
+
+set recolor "false"
+#set recolor-lightcolor "#d8dee9" #00
+#set recolor-darkcolor "#2e3440" #06
+set recolor-reverse-video "false"
+set recolor-keephue "false"
+
+
+set render-loading "false"
+unmap f
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
