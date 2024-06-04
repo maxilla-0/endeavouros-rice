@@ -211,10 +211,9 @@ static const int scrollargs[][2] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button1,        spawn,          SHCMD("jgmenu_run") },
+	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkWinTitle,          0,              Button1,        spawn,          SHCMD("jgmenu_run") },
 	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("gnome-control-center wifi") },
 	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("alacritty -T htop -e htop") },
 	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("alacritty -e nvim /home/mandible/.local/src/slstatus/config.h") },
@@ -230,5 +229,6 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkRootWin,           0,              Button3,        spawn,          SHCMD("jgmenu_run") },
 };
 
