@@ -91,28 +91,24 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont}
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "alacritty", "-T", scratchpadname, NULL };
-
-//static const char *upvol[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", NULL };
-//static const char *downvol[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-2%", NULL };
-//static const char *mutevol[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
-//static const char *upvol[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", "&&", "kill", "-19", "$(pidof slstatus)", "&&", "kill", "-18", "$(pidof slstatus)", NULL };
-//static const char *downvol[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-2%", "&&", "kill", "-19", "$(pidof slstatus)", "&&", "kill", "-18", "$(pidof slstatus)", NULL };
-//static const char *mutevol[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", "&&", "kill", "-19", "$(pidof slstatus)", "&&", "kill", "-18", "$(pidof slstatus)", NULL };
+static const char *upvol[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", NULL };
+static const char *downvol[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-2%", NULL };
+static const char *mutevol[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 static const char *brupcmd[] = { "brightnessctl", "set", "1%+", NULL };
 static const char *brdowncmd[] = { "brightnessctl", "set", "1%-", NULL };
-
-//static const char *rofi[]     = {"rofi", "-show", "drun", "-show-icons", "-icon-theme", "Zafiro-Nord-Black-Blue","-theme-str", "'window {width: 70%;}'", NULL };
-//static const char *rofiwifi[]    = {"~/.local/bin/rofi-wifi-menu", NULL };
-//static const char *rofilinks[]    = {"bash", "/home/mandible/rofi-links/links.sh", NULL };
-//static const char *rofilinks[]    = {"~/.local/bin/links", NULL };
+static const char *rofi[]     = {"rofi", "-show", "drun", "-show-icons", "-icon-theme", "Gruvbox dark plus","-theme-str", "window {width: 70%;}", NULL };
+static const char *rofiwifi[]    = {"/home/mandible/.local/bin/rofi-wifi-menu", NULL };
+static const char *rofilinks[]    = {"/home/mandible/.local/bin/links", NULL };
 static const char *rofisearch[] = {"rofi", "-show", "search", "-modi", "search:/home/mandible/.local/bin/rofi-web-search.py", NULL };
 static const char *rofishowwindow[] = {"rofi", "-show", "window", "-show-icons", "-icon-theme", "'Gruvbox dark plus'", "-width", "35", NULL };
-//static const char *rofipowermenu[] = {"rofi", "-show", "power-menu", "-theme-str 'window {width: 10%;}'", "-modi", "power-menu:/home/mandible/.local/bin/rofi-power-menu", NULL };
+static const char *rofipowermenu[] = {"rofi", "-show", "power-menu", "-theme-str", "window {width: 10%;}", "-modi", "power-menu:/home/mandible/.local/bin/rofi-power-menu", NULL };
+static const char *ppr[] = {"/home/mandible/.local/bin/ppr.sh", NULL};
 static const char *ff[]    = {"firefox", NULL };
 static const char *fileman[] = {"pcmanfm", NULL };
+static const char *screenshot[] = {"flameshot", "gui", NULL};
 static const char *lock[]    = {"slock", NULL };
+static const char *clipboard[] = {"/home/mandible/.local/bin/dmenuclip.sh", NULL};
 static const char *osk[]    = {"svkbd-mobile-intl", "-g", "1000x400+460+669", NULL };
-
 static const char *mskb[] = { "alacritty", "-T", "Musikcube", "-e", "musikcube", NULL };
 static const char *medplaypausecmd[] = { "playerctl", "play-pause", NULL };
 static const char *mednextcmd[] = { "playerctl", "next", NULL };
@@ -121,80 +117,76 @@ static const char *medprevcmd[] = { "playerctl", "previous", NULL };
 #include <X11/XF86keysym.h>
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.01} },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.01} },
-	{ MODKEY|ShiftMask,             XK_h,      togglebar,      {0} },
-	{ MODKEY|ShiftMask,             XK_t,      toggletopbar,   {0} },
-	{ MODKEY,                       XK_f,      zoom,           {0} },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_s,      incnmaster,     {.i = +1 } },
-	{ MODKEY,		        XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_v,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_n,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_g,      togglefloating, {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_g,      center,         {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {0} },
-	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,	        XK_Return, spawn,          SHCMD("st") },
-	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,	 	        XK_z,      spawn,          SHCMD("rofi -show drun -show-icons -icon-theme 'Gruvbox dark plus' -theme-str 'window {width: 70%;}'") },
-	{ MODKEY|ShiftMask,	        XK_z,      spawn,          SHCMD("~/.local/bin/rofi-wifi-menu") },
-	{ MODKEY,	 	        XK_x,      spawn,          SHCMD("~/.local/bin/ppr.sh") },
-//	{ MODKEY,		        XK_b,      spawn,          {.v = rofilinks } },
-	{ MODKEY|ShiftMask,	        XK_s,      spawn,          {.v = rofisearch } },
-	{ MODKEY,		        XK_a,      spawn,          {.v = rofishowwindow } },
-	{ MODKEY,		        XK_Escape, spawn,          SHCMD("rofi -show power-menu -theme-str 'window {width: 10%;}' -modi power-menu:/home/mandible/.local/bin/rofi-power-menu") },
-	{ ControlMask|ShiftMask,        XK_f,      spawn,          {.v = ff } },
-	{ ControlMask|ShiftMask,        XK_Escape, spawn,          SHCMD("alacritty -T btop -e btop") },
-	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = fileman } },
-	{ MODKEY|ShiftMask,	        XK_l,      spawn,          {.v = lock } },
-	{ MODKEY|ShiftMask,	        XK_k,      spawn,          {.v = osk } },
-	{ 0,			        0xff61,    spawn,          SHCMD("flameshot gui") },
-	{ MODKEY|ShiftMask,	        XK_F1,     spawn,          SHCMD("firefox dwm.suckless.org") },
-	{ 0,			        XF86XK_AudioRaiseVolume,   spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +2%") },
-	{ 0,			        XF86XK_AudioLowerVolume,   spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -2%") },
-	{ 0,			        XF86XK_AudioMute,          spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
-//	{ 0,			        XF86XK_AudioRaiseVolume,   spawn,	SHCMD("~/.local/bin/volume_brightness.sh volume_up") },
-//	{ 0,			        XF86XK_AudioLowerVolume,   spawn,	SHCMD("~/.local/bin/volume_brightness.sh volume_down") },
-//	{ 0,			        XF86XK_AudioMute,          spawn,	SHCMD("~/.local/bin/volume_brightness.sh volume_mute")},
-	{ MODKEY|ShiftMask,	        XK_m,      spawn,          {.v = mskb } },
-	{ MODKEY|ControlMask|ShiftMask,	XK_m,      spawn,          SHCMD("myxer") },
-	{ 0,                            XF86XK_AudioPlay,          spawn,          {.v = medplaypausecmd } },
-	{ 0,                            XF86XK_AudioNext,          spawn,          {.v = mednextcmd } },
-	{ 0,                            XF86XK_AudioPrev,          spawn,          {.v = medprevcmd } },
-	{ 0,			        XF86XK_MonBrightnessUp,    spawn,          {.v = brupcmd} },
-	{ 0,			        XF86XK_MonBrightnessDown,  spawn,          {.v = brdowncmd} },
-	{ MODKEY|ShiftMask,		XK_v,      spawn,	   SHCMD("alacritty -T [Update] -e sudo pacman -Syu") },
-	{ MODKEY|ShiftMask,		XK_space,  spawn,          SHCMD("/home/mandible/.local/bin/dmenuclip.sh") },
-	{ MODKEY|ControlMask|ShiftMask,	XK_z,      spawn,          SHCMD("/home/mandible/.local/bin/xzoom") },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i =  0 } },
-	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_c,      spawn,          SHCMD("pkill batsignal; pkill dwm") },
+	/* modifier                     	key        			function        	argument */
+	{ MODKEY,				XK_l,      			setmfact,       	{.f = +0.01} },
+	{ MODKEY,				XK_k,      			focusstack,     	{.i = -1 } },
+	{ MODKEY,				XK_j,      			focusstack,     	{.i = +1 } },
+	{ MODKEY,				XK_h,      			setmfact,       	{.f = -0.01} },
+	{ MODKEY|ShiftMask,			XK_h,      			togglebar,      	{0} },
+	{ MODKEY|ShiftMask,			XK_t,      			toggletopbar,   	{0} },
+	{ MODKEY,				XK_f,      			zoom,           	{0} },
+	{ MODKEY,				XK_d,      			incnmaster,     	{.i = -1 } },
+	{ MODKEY,				XK_s,      			incnmaster,     	{.i = +1 } },
+	{ MODKEY,				XK_c,      			killclient,     	{0} },
+	{ MODKEY,				XK_v,      			setlayout,      	{.v = &layouts[0]} },
+	{ MODKEY,				XK_n,      			setlayout,      	{.v = &layouts[1]} },
+	{ MODKEY,				XK_m,      			setlayout,      	{.v = &layouts[2]} },
+	{ MODKEY,				XK_y,      			setlayout,      	{.v = &layouts[3]} },
+	{ MODKEY,				XK_g,      			togglefloating, 	{0} },
+	{ MODKEY|ControlMask|ShiftMask,		XK_g,      			center,         	{0} },
+	{ MODKEY,				XK_t,      			setlayout,      	{0} },
+	{ MODKEY,				XK_space,  			spawn,          	{.v = dmenucmd } },
+	{ MODKEY,				XK_Return, 			spawn,          	{.v = termcmd } },
+	{ MODKEY,				XK_grave,  			togglescratch,  	{.v = scratchpadcmd } },
+	{ MODKEY,				XK_z,      			spawn,          	{.v = rofi } },
+	{ MODKEY|ShiftMask,			XK_z,      			spawn,          	{.v = rofiwifi } },
+	{ MODKEY,				XK_x,      			spawn,          	{.v = ppr } },
+	{ MODKEY,				XK_b,      			spawn,          	{.v = rofilinks } },
+	{ MODKEY|ShiftMask,			XK_s,      			spawn,          	{.v = rofisearch } },
+	{ MODKEY,				XK_a,      			spawn,          	{.v = rofishowwindow } },
+	{ MODKEY,				XK_Escape, 			spawn,          	{.v = rofipowermenu } },
+	{ ControlMask|ShiftMask,		XK_f,      			spawn,          	{.v = ff } },
+	{ ControlMask|ShiftMask,		XK_Escape, 			spawn,          	SHCMD("alacritty -T btop -e btop") },
+	{ MODKEY|ShiftMask,			XK_f,      			spawn,          	{.v = fileman } },
+	{ MODKEY|ShiftMask,			XK_l,      			spawn,          	{.v = lock } },
+	{ MODKEY|ShiftMask,			XK_k,      			spawn,          	{.v = osk } },
+	{ 0,					0xff61,    			spawn,          	{.v = screenshot } },
+	{ MODKEY|ShiftMask,			XK_F1,				spawn,          	SHCMD("firefox dwm.suckless.org") },
+	{ 0,					XF86XK_AudioRaiseVolume,	spawn,          	{.v = upvol } },
+	{ 0,					XF86XK_AudioLowerVolume,	spawn,          	{.v = downvol } },
+	{ 0,					XF86XK_AudioMute,		spawn,          	{.v = mutevol } },
+	{ MODKEY|ShiftMask,			XK_m,      			spawn,          	{.v = mskb } },
+	{ MODKEY|ControlMask|ShiftMask,		XK_m,      			spawn,          	SHCMD("myxer") },
+	{ 0,					XF86XK_AudioPlay,	        spawn,          	{.v = medplaypausecmd } },
+	{ 0,					XF86XK_AudioNext,       	spawn,          	{.v = mednextcmd } },
+	{ 0,					XF86XK_AudioPrev,       	spawn,          	{.v = medprevcmd } },
+	{ 0,					XF86XK_MonBrightnessUp, 	spawn,          	{.v = brupcmd} },
+	{ 0,			        	XF86XK_MonBrightnessDown,	spawn,          	{.v = brdowncmd} },
+	{ MODKEY|ShiftMask,			XK_v,      			spawn,			SHCMD("alacritty -T [Update] -e sudo pacman -Syu") },
+	{ MODKEY|ShiftMask,			XK_space,  			spawn,          	{.v = clipboard } },
+	{ MODKEY|ControlMask|ShiftMask,		XK_z,      			spawn,          	SHCMD("	/home/mandible/.local/bin/xzoom") },
+	{ MODKEY,                       	XK_Tab,    			view,           	{0} },
+	{ MODKEY,                       	XK_0,      			view,           	{.ui = ~0 } },
+	{ MODKEY|ShiftMask,             	XK_0,      			tag,            	{.ui = ~0 } },
+	{ MODKEY,                       	XK_comma,  			focusmon,       	{.i = -1 } },
+	{ MODKEY,                       	XK_period, 			focusmon,       	{.i = +1 } },
+	{ MODKEY|ShiftMask,             	XK_comma,  			tagmon,         	{.i = -1 } },
+	{ MODKEY|ShiftMask,             	XK_period, 			tagmon,         	{.i = +1 } },
+	{ MODKEY,                       	XK_minus,  			setgaps,        	{.i = -1 } },
+	{ MODKEY,                       	XK_equal,  			setgaps,        	{.i = +1 } },
+	{ MODKEY|ShiftMask,             	XK_equal,  			setgaps,        	{.i =  0 } },
+	{ MODKEY,                       	XK_F5,     			xrdb,           	{.v = NULL } },
+	TAGKEYS(                        	XK_1,                      0)
+	TAGKEYS(                        	XK_2,                      1)
+	TAGKEYS(                        	XK_3,                      2)
+	TAGKEYS(                        	XK_4,                      3)
+	TAGKEYS(                        	XK_5,                      4)
+	TAGKEYS(                        	XK_6,                      5)
+	TAGKEYS(                        	XK_7,                      6)
+	TAGKEYS(                        	XK_8,                      7)
+	TAGKEYS(                        	XK_9,                      8)
+	{ MODKEY|ShiftMask,             	XK_c,      			quit,           	{0} },
+	{ MODKEY|ControlMask|ShiftMask, 	XK_c,      			spawn,          	SHCMD("pkill -u mandible") },
 };
 
 /* resizemousescroll direction argument list */
@@ -210,25 +202,24 @@ static const int scrollargs[][2] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("gnome-control-center wifi") },
-	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("alacritty -T htop -e htop") },
-	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("alacritty -e nvim /home/mandible/.local/src/slstatus/config.h") },
-	{ ClkStatusText,        MODKEY,         Button2,        spawn,          SHCMD("alacritty -e nvim /home/mandible/.local/src/dwm/config.h") },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkClientWin,         MODKEY,         Button4,        resizemousescroll, {.v = &scrollargs[0]} },
-	{ ClkClientWin,         MODKEY,         Button5,        resizemousescroll, {.v = &scrollargs[1]} },
-	{ ClkClientWin,         MODKEY,         Button6,        resizemousescroll, {.v = &scrollargs[2]} },
-	{ ClkClientWin,         MODKEY,         Button7,        resizemousescroll, {.v = &scrollargs[3]} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkRootWin,           0,              Button3,        spawn,          SHCMD("jgmenu_run") },
+	/* click                event mask     	button          function        	argument */
+	{ ClkLtSymbol,          0,             	Button1,        setlayout,      	{0} },
+	{ ClkLtSymbol,          0,              Button3,        setlayout,      	{.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              Button2,        zoom,           	{0} },
+	{ ClkStatusText,        0,              Button1,        spawn,          	SHCMD("gnome-control-center wifi") },
+	{ ClkStatusText,        0,              Button3,        spawn,          	SHCMD("alacritty -T htop -e htop") },
+	{ ClkStatusText,        0,              Button2,        spawn,          	SHCMD("alacritty -e nvim /home/mandible/.local/src/slstatus/config.h") },
+	{ ClkStatusText,        MODKEY,         Button2,        spawn,          	SHCMD("alacritty -e nvim /home/mandible/.local/src/dwm/config.h") },
+	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      	{0} },
+	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, 	{0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    	{0} },
+	{ ClkClientWin,         MODKEY,         Button4,        resizemousescroll, 	{.v = &scrollargs[0]} },
+	{ ClkClientWin,         MODKEY,         Button5,        resizemousescroll, 	{.v = &scrollargs[1]} },
+	{ ClkClientWin,         MODKEY,         Button6,        resizemousescroll, 	{.v = &scrollargs[2]} },
+	{ ClkClientWin,         MODKEY,         Button7,        resizemousescroll, 	{.v = &scrollargs[3]} },
+	{ ClkTagBar,            0,              Button1,        view,           	{0} },
+	{ ClkTagBar,            0,              Button3,        toggleview,     	{0} },
+	{ ClkTagBar,            MODKEY,         Button1,        tag,            	{0} },
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      	{0} },
+	{ ClkRootWin,           0,              Button3,        spawn,          	SHCMD("jgmenu_run") },
 };
-
