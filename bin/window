@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cat <<EOF | jgmenu --simple --icon-size=0
+
+  Toggle floating,	dwmc togglefloating
+󰻿  Move to center,	dwmc movecenter
+  Move window,		dwmc movemouse
+󰙖  Resize window,	dwmc resizemouse
+  Always on top,	dwmc togglealwaysontop
+  Close window,	dwmc killclient
+
+EOF

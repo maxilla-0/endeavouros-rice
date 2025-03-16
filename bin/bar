@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cat <<EOF | jgmenu --simple --icon-size=0
+
+Hide bar,		dwmc togglebar
+Toggle top/bottom bar,	dwmc toggletopbar
+Restart dwm,		dwmc quit
+
+EOF

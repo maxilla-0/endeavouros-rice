@@ -1,0 +1,83 @@
+#!/bin/sh
+
+cat <<EOF | jgmenu --simple
+
+󰌢 About System,	alacritty --hold -e neofetch
+^sep()
+Screen,		^checkout(screen),	
+Customize,	^checkout(config),	lxappearance
+󰛳 Network,		^checkout(network)
+󰚰 Update,		^checkout(update)
+
+^tag(screen)
+Settings, arandr, settings
+󰹑 Resolution, ^checkout(res)
+ Pissfilter, ^checkout(piss)
+^tag(piss)
+ On, redshift -O 3000
+ Off, redshift -x
+^tag(res)
+1920x1080, xrandr -s 1920x1080;nitrogen --restore
+1680x1050, xrandr -s 1680x1050;nitrogen --restore
+1400x1050, xrandr -s 1400x1050;nitrogen --restore
+1600x900, xrandr -s 1600x900;nitrogen --restore
+1280x1024, xrandr -s 1280x1024;nitrogen --restore
+1400x900, xrandr -s 1400x900;nitrogen --restore
+1280x960, xrandr -s 1280x960;nitrogen --restore
+1440x810, xrandr -s 1440x810;nitrogen --restore
+1368x768, xrandr -s 1368x768;nitrogen --restore
+1280x800, xrandr -s 1280x800;nitrogen --restore
+1280x720, xrandr -s 1280x720;nitrogen --restore
+1024x768, xrandr -s 1024x768;nitrogen --restore
+960x720, xrandr -s 960x720;nitrogen --restore
+928x696, xrandr -s 928x696;nitrogen --restore
+896x672, xrandr -s 896x672;nitrogen --restore
+1024x576, xrandr -s 1024x576;nitrogen --restore
+960x600, xrandr -s 960x600;nitrogen --restore
+960x540, xrandr -s 960x540;nitrogen --restore
+800x600, xrandr -s 800x600;nitrogen --restore
+840x525, xrandr -s 840x525;nitrogen --restore
+864x486, xrandr -s 864x486;nitrogen --restore
+700x525, xrandr -s 700x525;nitrogen --restore
+800x450, xrandr -s 800x450;nitrogen --restore
+640x512, xrandr -s 640x512;nitrogen --restore
+700x450, xrandr -s 700x450;nitrogen --restore
+640x480, xrandr -s 640x480;nitrogen --restore
+720x405, xrandr -s 720x405;nitrogen --restore
+684x384, xrandr -s 684x384;nitrogen --restore
+640x400, xrandr -s 640x400;nitrogen --restore
+640x360, xrandr -s 640x360;nitrogen --restore
+512x384, xrandr -s 512x384;nitrogen --restore
+512x288, xrandr -s 512x288;nitrogen --restore
+480x270, xrandr -s 480x270;nitrogen --restore
+400x300, xrandr -s 400x300;nitrogen --restore
+432x243, xrandr -s 432x243;nitrogen --restore
+320x240, xrandr -s 320x240;nitrogen --restore
+360x202, xrandr -s 360x202;nitrogen --restore
+320x180, xrandr -s 320x180;nitrogen --restore
+
+^tag(config)
+󰸉 Wallpaper, nitrogen
+ Customize Look and feel (GTK), lxappearance
+ Kvantum (QT), kvantummanager
+ QT5CT (QT), qt5ct
+ Configs and source codes, ^checkout(csc)
+^tag(csc)
+ WM, alacritty -e nvim /home/mandible/.local/src/dwm/config.h
+ Alacritty, alacritty -e nvim /home/mandible/.config/alacritty/alacritty.toml
+󰗘 Picom, alacritty -e nvim /home/mandible/.config/picom/picom.conf
+ Neovim, alacritty -e nvim /home/mandible/.config/nvim/init.vim
+󰍜 Rofi, alacritty -e nvim /home/mandible/.config/rofi/themes/gruvbox.rasi
+ slstatus, alacritty -e nvim /home/mandible/.local/src/slstatus/config.h
+ i3lock, alacritty -e nvim /home/mandible/.local/bin/i3lock.sh
+
+^tag(network)
+󰖩 Wifi, alacritty -T Wi-Fi -e nmtui
+ Edit Connections, nm-connection-editor
+ Firewall, firewall-config
+
+^tag(update)
+󰮯 Pacman, alacritty -T Update -e sudo pacman -Syu
+ AUR, alacritty -T 'Update (AUR)' -e yay -Syu
+
+EOF

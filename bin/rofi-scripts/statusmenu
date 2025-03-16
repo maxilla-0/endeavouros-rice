@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pp="cat /home/mandible/.local/bin/rofi-scripts/ppr.txt"
+
+rofi -show rnet rbt   $pp -modes 'rnet:/home/mandible/.local/bin/rofi-scripts/rnet.sh,rbt:/home/mandible/.local/bin/rofi-scripts/rbt.sh,:/home/mandible/.local/bin/rofi-scripts/rvol.sh,$pp:/home/mandible/.local/bin/rofi-scripts/ppr.sh' -location 3 -theme-str 'mainbox {children: [mode-switcher,message,listview];} window {width: 15%; x-offset: -6; y-offset: 48; border: 0px;} listview {scrollbar: false;} inputbar {enabled: false;} listview {padding: 0px 6px 6px 6px;} mode-switcher{padding: 6px;}' -hover-select -me-select-entry '' -me-accept-entry '!MousePrimary'

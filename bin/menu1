@@ -1,0 +1,81 @@
+#!/bin/sh
+
+cat <<EOF | jgmenu --simple
+
+${USER^},	^checkout(pwr),	user-info
+^sep()
+Btop,		alacritty -T Btop -e btop,	btop
+Terminal,	alacritty,			Alacritty
+File Manager,	pcmanfm,			filemanager-app
+Firefox,	firefox,			firefox_alt
+Color Picker,	xcolor -s,			colorpicker
+Camera,		mpv  --profile=low-latency --untimed /dev/video0, camera-web
+Resolution,	^checkout(res),			resizer
+Piss-filter,	^checkout(piss),		redshift-gtk
+Update,		^checkout(update),		update
+
+^tag(piss)
+On, redshift -P -O 3000;notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/panel/16/redshift-status-on.svg' 'Piss-filter applied', redshift-status-on
+Off, redshift -x;notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/panel/16/redshift-status-off.svg' 'Piss-filter removed', redshift-status-off
+Blood-filter, redshift -P -O 1000;notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/actions/16/messagebox_warning.svg' 'Blood-filter applied', messagebox_warning
+
+^tag(update)
+Pacman, notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/categories/32/software-update.svg' 'Starting update';alacritty -T Update -e sudo pacman -Syu;notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/categories/32/software-update.svg' 'Finished update', pacman
+AUR, notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/categories/32/software-update.svg' 'Starting update';alacritty -T 'Update (AUR)' -e yay -Syu;notify-send -i '/usr/share/icons/Gruvbox-Plus-Dark/categories/32/software-update.svg' 'Finished update', archlinux
+
+^tag(res)
+1920x1080, xrandr -s 1920x1080;nitrogen --restore
+1680x1050, xrandr -s 1680x1050;nitrogen --restore
+1400x1050, xrandr -s 1400x1050;nitrogen --restore
+1600x900, xrandr -s 1600x900;nitrogen --restore
+1280x1024, xrandr -s 1280x1024;nitrogen --restore
+1400x900, xrandr -s 1400x900;nitrogen --restore
+1280x960, xrandr -s 1280x960;nitrogen --restore
+1440x810, xrandr -s 1440x810;nitrogen --restore
+1368x768, xrandr -s 1368x768;nitrogen --restore
+1280x800, xrandr -s 1280x800;nitrogen --restore
+1280x720, xrandr -s 1280x720;nitrogen --restore
+1024x768, xrandr -s 1024x768;nitrogen --restore
+960x720, xrandr -s 960x720;nitrogen --restore
+928x696, xrandr -s 928x696;nitrogen --restore
+896x672, xrandr -s 896x672;nitrogen --restore
+1024x576, xrandr -s 1024x576;nitrogen --restore
+960x600, xrandr -s 960x600;nitrogen --restore
+960x540, xrandr -s 960x540;nitrogen --restore
+800x600, xrandr -s 800x600;nitrogen --restore
+840x525, xrandr -s 840x525;nitrogen --restore
+864x486, xrandr -s 864x486;nitrogen --restore
+700x525, xrandr -s 700x525;nitrogen --restore
+800x450, xrandr -s 800x450;nitrogen --restore
+640x512, xrandr -s 640x512;nitrogen --restore
+700x450, xrandr -s 700x450;nitrogen --restore
+640x480, xrandr -s 640x480;nitrogen --restore
+720x405, xrandr -s 720x405;nitrogen --restore
+684x384, xrandr -s 684x384;nitrogen --restore
+640x400, xrandr -s 640x400;nitrogen --restore
+640x360, xrandr -s 640x360;nitrogen --restore
+512x384, xrandr -s 512x384;nitrogen --restore
+512x288, xrandr -s 512x288;nitrogen --restore
+480x270, xrandr -s 480x270;nitrogen --restore
+400x300, xrandr -s 400x300;nitrogen --restore
+432x243, xrandr -s 432x243;nitrogen --restore
+320x240, xrandr -s 320x240;nitrogen --restore
+360x202, xrandr -s 360x202;nitrogen --restore
+320x180, xrandr -s 320x180;nitrogen --restore
+
+^tag(top)
+ Htop,alacritty -T Htop -e htop
+ Btop,alacritty -T Btop -e btop
+
+^tag(dwm)
+ Website,xdg-open https://dwm.suckless.org/
+ Manual,alacritty -T 'DWM Manual' -e man dwm
+ Config,alacritty -e nvim /home/mandible/.local/src/dwm/config.h
+
+^tag(pwr)
+Logout, loginctl terminate-session ${XDG_SESSION_ID-}, logout_highlight
+Hibernate, systemctl hibernate, drive-harddisk
+Reboot, systemctl reboot,	restart_highlight
+Shutdown, systemctl poweroff,	shutdown_highlight
+
+EOF
